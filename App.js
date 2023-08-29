@@ -4,7 +4,6 @@ import { FlatList, Image, Text, TouchableOpacity, View, ActivityIndicator, Refre
 
 const App = () => {
 
-
     const [data, setData] = useState([])
     const [page, setPage] = useState(1)
     const [loadingMore, setLoadingMore] = useState(false);
@@ -43,6 +42,21 @@ const App = () => {
         getDatas(1);
 
     };
+
+    // custom title
+    const formatTitle = (text) => {
+        if (text.length >= 15) {
+            const newText = text.slice(0, 15 - 3) + "..."
+            return <Text>{newText}</Text>
+        } else {
+            return <Text>{text}</Text>
+        }
+    }
+    // custom date    
+    const formatDate = (date) => {
+        const newDate = date.split("-")
+        return newDate[0]
+    }
 
     useEffect(() => {
         getDatas(1)
@@ -95,14 +109,18 @@ const App = () => {
                                     width: "100%", height: "100%", borderRadius: 7,
                                 }} source={{ uri: "https://image.tmdb.org/t/p/w500" + item.poster_path }} />
                                 <View style={{
-                                    backgroundColor: "black", width: "100%", height: 40, position: "absolute",
+                                    backgroundColor: "black", width: "100%", height: 50, position: "absolute",
                                     bottom: 0, opacity: 0.2,
                                 }}>
                                 </View>
                                 <Text style={{
+                                    position: "absolute", bottom: 30, left: 10, color: "white",
+                                    width: 120, fontSize: 13, fontWeight: "300"
+                                }}>{formatDate(item.release_date)}</Text>
+                                <Text style={{
                                     position: "absolute", bottom: 10, left: 10, color: "white",
                                     fontWeight: "600", width: 120, fontSize: 13
-                                }}>{item.title}</Text>
+                                }}>{formatTitle(item.title)}</Text>
 
                                 <View style={{
                                     position: "absolute",
